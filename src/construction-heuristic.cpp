@@ -1,48 +1,82 @@
 #include "construction-heuristic.h"
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
 ConstructionHeuristic::ConstructionHeuristic(
-    int n,
-    int m,
-    int p,
-    vector<int> b,
+    int jobsNumber,
+    int serversNumber,
+    int defaultCost,
+    vector<int> serversTimeCapacity,
     vector< vector<int> > timeMatrix,
     vector< vector<int> > costMatrix
 ) {
-    this->n = n;
-    this->m = m;
-    this->p = p;
-    this->b = b;
+    this->jobsNumber = jobsNumber;
+    this->serversNumber = serversNumber;
+    this->defaultCost = defaultCost;
+    this->serversTimeCapacity = serversTimeCapacity;
     this->timeMatrix = timeMatrix;
     this->costMatrix = costMatrix;
 
-    // calculate avarege vector of time and cost
-    for (int i = 0; i < m; i++) {
-        vector<int> timeVsCost;
-        for (int j = 0; j < n; j++) {
-            timeVsCost.push_back((timeMatrix[i][j] + costMatrix[i][j]) / 2);
+    int indexServer = 0;
+    int timeUsed = 0;
+    int notAllocatedJobs = 0;
+    vector<int> serverSolution;
+    bool areServersFull = false;
+
+    // TODO: improve it
+    for (int i = 0; i < jobsNumber; i++) {
+        int timeServerCapacity = serversTimeCapacity[indexServer];
+
+        int currentTimeUsed = timeUsed + timeMatrix[indexServer][i];
+
+        if (areServersFull) {
+            notAllocatedJobs++;
+        } else {
+            if (currentTimeUsed < timeServerCapacity) {
+                serverSolution.push_back(i);
+                timeUsed += currentTimeUsed;
+            } else {
+                this->solution.push_back(serverSolution);
+
+                if (indexServer == serversNumber - 1) {
+                    areServersFull = true;
+                } else {
+                    indexServer++;
+                }
+
+                serverSolution.clear();
+                serverSolution.push_back(i);
+                timeUsed = 0;
+
+                if (areServersFull) {
+                    this->solution.push_back(serverSolution);
+                }
+
+                timeUsed += timeMatrix[indexServer][i];
+            }
         }
-        this->timeVsCost.push_back(timeVsCost);
     }
+
+    this->notAllocatedJobs = notAllocatedJobs;
 }
 
 
-int ConstructionHeuristic::getN() {
-    return n;
+int ConstructionHeuristic::getJobsNumber() {
+    return jobsNumber;
 }
 
-int ConstructionHeuristic::getM() {
-    return m;
+int ConstructionHeuristic::getServersNumber() {
+    return serversNumber;
 }
 
-int ConstructionHeuristic::getP() {
-    return p;
+int ConstructionHeuristic::getDefaultCost() {
+    return defaultCost;
 }
 
-vector<int> ConstructionHeuristic::getB() {
-    return b;
+vector<int> ConstructionHeuristic::getServersTimeCapacity() {
+    return serversTimeCapacity;
 }
 
 vector< vector<int> > ConstructionHeuristic::getTimeMatrix() {
@@ -56,4 +90,12 @@ vector< vector<int> > ConstructionHeuristic::getCostMatrix() {
 
 vector< vector<int> > ConstructionHeuristic::getTimeVsCost() {
     return timeVsCost;
+}
+
+vector< vector<int> > ConstructionHeuristic::getSolution() {
+    return solution;
+}
+
+int ConstructionHeuristic::getNotAllocatedJobs() {
+    return notAllocatedJobs;
 }

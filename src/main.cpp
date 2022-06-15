@@ -8,21 +8,23 @@ using namespace std;
 int main (void) {
     Data data = Data("./instances/n5m15A.txt");
     ConstructionHeuristic ch = ConstructionHeuristic(
-        data.getN(),
-        data.getM(),
-        data.getP(),
-        data.getB(),
+        data.getJobsNumber(),
+        data.getServersNumber(),
+        data.getDefaultCost(),
+        data.getServersCapacity(),
         data.getTimeMatrix(),
         data.getCostMatrix()
     );
 
     // print data
-    for (int i = 0; i < ch.getTimeVsCost().size(); i++) {
-        for (int j = 0; j < ch.getTimeVsCost()[i].size(); j++) {
-            cout << ch.getTimeVsCost()[i][j] << " ";
+    for (int i = 0; i < ch.getSolution().size(); i++) {
+        for (int j = 0; j < ch.getSolution()[i].size(); j++) {
+            cout << ch.getSolution()[i][j] << " ";
         }
         cout << " " <<endl;
     }
+
+    cout << "notAllocated: " << ch.getNotAllocatedJobs() << endl;
 
     return 0;
 }

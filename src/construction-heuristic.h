@@ -7,39 +7,40 @@ using namespace std;
 
 class ConstructionHeuristic {
     private:
-        int n;  // number of jobs
-        int m;  // number of servers
-        int p;  // dafault cost
-        vector<int> b; // servers capacity
+        int jobsNumber;  // number of jobs
+        int serversNumber;  // number of servers
+        int defaultCost;  // dafault cost
+        vector<int> serversTimeCapacity; // servers time capacity
         vector< vector<int> > timeMatrix; // jobs time
         vector< vector<int> > costMatrix; // jobs cost
 
         vector< vector<int> > timeVsCost; // jobs time vs cost
 
-        vector< vector<string> > solution; // solution
-
-        int totalCost;
-        int totalTime;
+        vector< vector<int> > solution; // solution
+        int notAllocatedJobs; // number of not allocated jobs
 
     public:
         ConstructionHeuristic();
         ConstructionHeuristic(
-            int n,
-            int m,
-            int p,
-            vector<int> b,
+            int jobsNumber,
+            int serversNumber,
+            int defaultCost,
+            vector<int> serversTimeCapacity,
             vector< vector<int> > timeMatrix,
             vector< vector<int> > costMatrix
         );
 
-        int getN();
-        int getM();
-        int getP();
-        vector<int> getB();
+        int getJobsNumber();
+        int getServersNumber();
+        int getDefaultCost();
+        vector<int> getServersTimeCapacity();
         vector< vector<int> > getTimeMatrix();
         vector< vector<int> > getCostMatrix();
+
         vector< vector<int> > getTimeVsCost();
 
+        vector< vector<int> > getSolution();
+        int getNotAllocatedJobs();
 };
 
 #endif // CONSTRUCTIONHEURISTIC_H

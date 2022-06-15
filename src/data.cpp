@@ -16,32 +16,33 @@ void simple_tokenizer(string s, vector<int> &token) {
     }
 }
 
-Data::Data(string path_param) {
+Data::Data(string pathParam) {
     string info;
     int line_number = 0;
 
-    ifstream myfile(path_param);
+    ifstream myfile(pathParam);
 
     if (myfile.is_open()) {
         while (getline (myfile,info)) {
             if (line_number == 0) {
-                n = stoi(info);
+                jobsNumber = stoi(info);
             }
             if (line_number == 1) {
-                m = stoi(info);
+                serversNumber = stoi(info);
             }
             if (line_number == 2) {
-                p = stoi(info);
+                defaultCost = stoi(info);
             }
             if (line_number == 4) {
-                simple_tokenizer(info, b);
+                simple_tokenizer(info, serversCapacity);
             }
-            if (line_number > 5 && line_number < m + 6) {
+            if (line_number > 5 && line_number < serversNumber + 6) {
                 vector<int> line;
                 simple_tokenizer(info, line);
                 timeMatrix.push_back(line);
             }
-            if (line_number > m + 6 && line_number < m + 7 + n) {
+            // TODO: refact this
+            if (line_number > serversNumber + 6 && line_number < serversNumber + 7 + jobsNumber) {
                 vector<int> line;
                 simple_tokenizer(info, line);
                 costMatrix.push_back(line);
@@ -51,24 +52,24 @@ Data::Data(string path_param) {
         }
 
         myfile.close();
-    } else cout << "Unable to open file in path" << path_param;
+    } else cout << "Unable to open file in path" << pathParam;
 }
 
 
-int Data::getN() {
-    return n;
+int Data::getJobsNumber() {
+    return jobsNumber;
 }
 
-int Data::getM() {
-    return m;
+int Data::getServersNumber() {
+    return serversNumber;
 }
 
-int Data::getP() {
-    return p;
+int Data::getDefaultCost() {
+    return defaultCost;
 }
 
-vector<int> Data::getB() {
-    return b;
+vector<int> Data::getServersCapacity() {
+    return serversCapacity;
 }
 
 vector< vector<int> > Data::getTimeMatrix() {

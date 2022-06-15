@@ -8,10 +8,10 @@ using namespace std;
 
 class Data {
     private:
-        int n;  // number of jobs
-        int m;  // number of servers
-        int p;  // dafault cost
-        vector<int> b; // servers capacity
+        int jobsNumber;  // number of jobs
+        int serversNumber;  // number of servers
+        int defaultCost;  // dafault cost
+        vector<int> serversCapacity; // servers capacity
         vector< vector<int> > timeMatrix; // jobs time
         vector< vector<int> > costMatrix; // jobs cost
 
@@ -19,10 +19,10 @@ class Data {
         Data();
         Data(string path);
 
-        int getN();
-        int getM();
-        int getP();
-        vector<int> getB();
+        int getJobsNumber();
+        int getServersNumber();
+        int getDefaultCost();
+        vector<int> getServersCapacity();
         vector< vector<int> > getTimeMatrix();
         vector< vector<int> > getCostMatrix();
 };
