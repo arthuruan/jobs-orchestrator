@@ -17,7 +17,7 @@ class ConstructionHeuristic {
         vector< vector<int> > timeVsCost; // jobs time vs cost
 
         vector< vector<int> > solution; // solution
-        int notAllocatedJobs; // number of not allocated jobs
+        vector<int> notAllocatedJobs; // number of not allocated jobs
 
     public:
         ConstructionHeuristic();
@@ -40,7 +40,7 @@ class ConstructionHeuristic {
         vector< vector<int> > getTimeVsCost();
 
         vector< vector<int> > getSolution();
-        int getNotAllocatedJobs();
+        vector<int> getNotAllocatedJobs();
 };
 
 #endif // CONSTRUCTIONHEURISTIC_H

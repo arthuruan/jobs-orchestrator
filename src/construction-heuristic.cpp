@@ -21,7 +21,7 @@ ConstructionHeuristic::ConstructionHeuristic(
 
     int indexServer = 0;
     int timeUsed = 0;
-    int notAllocatedJobs = 0;
+    vector<int> notAllocatedJobs;
     vector<int> serverSolution;
     bool areServersFull = false;
 
@@ -32,7 +32,7 @@ ConstructionHeuristic::ConstructionHeuristic(
         int currentTimeUsed = timeUsed + timeMatrix[indexServer][i];
 
         if (areServersFull) {
-            notAllocatedJobs++;
+            notAllocatedJobs.push_back(i);
         } else {
             if (currentTimeUsed < timeServerCapacity) {
                 serverSolution.push_back(i);
@@ -49,10 +49,6 @@ ConstructionHeuristic::ConstructionHeuristic(
                 serverSolution.clear();
                 serverSolution.push_back(i);
                 timeUsed = 0;
-
-                if (areServersFull) {
-                    this->solution.push_back(serverSolution);
-                }
 
                 timeUsed += timeMatrix[indexServer][i];
             }
@@ -96,6 +92,6 @@ vector< vector<int> > ConstructionHeuristic::getSolution() {
     return solution;
 }
 
-int ConstructionHeuristic::getNotAllocatedJobs() {
+vector<int> ConstructionHeuristic::getNotAllocatedJobs() {
     return notAllocatedJobs;
 }

@@ -7,7 +7,7 @@
 using namespace std;
 
 MathUtility::MathUtility(
-  int notAllocatedJob,
+  vector<int> notAllocatedJob,
   int defaultCost,
   vector< vector<int> > costMatrix,
   vector< vector<int> > solution
@@ -32,7 +32,7 @@ MathUtility::MathUtility(
     } 
   }
 
-  total_cost += (defaultCost * notAllocatedJob);
+  total_cost += (defaultCost * notAllocatedJob.size());
   this->total_cost = total_cost;
 }
 

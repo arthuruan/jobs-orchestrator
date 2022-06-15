@@ -31,7 +31,7 @@ int main (void) {
         cout << " " <<endl;
     }
 
-    cout << "notAllocated: " << ch.getNotAllocatedJobs() << endl;
+    // cout << "notAllocated: " << ch.getNotAllocatedJobs() << endl;
 
 
     cout << "Custo Total: " << mu.getTotalCost() << endl;
