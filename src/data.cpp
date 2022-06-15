@@ -39,12 +39,12 @@ Data::Data(string path_param) {
             if (line_number > 5 && line_number < m + 6) {
                 vector<int> line;
                 simple_tokenizer(info, line);
-                time.push_back(line);
+                timeMatrix.push_back(line);
             }
             if (line_number > m + 6 && line_number < m + 7 + n) {
                 vector<int> line;
                 simple_tokenizer(info, line);
-                cost.push_back(line);
+                costMatrix.push_back(line);
             }
 
             line_number++;
@@ -71,11 +71,11 @@ vector<int> Data::getB() {
     return b;
 }
 
-vector< vector<int> > Data::getTime() {
-    return time;
+vector< vector<int> > Data::getTimeMatrix() {
+    return timeMatrix;
 }
 
 
-vector< vector<int> > Data::getCost() {
-    return cost;
+vector< vector<int> > Data::getCostMatrix() {
+    return costMatrix;
 }
