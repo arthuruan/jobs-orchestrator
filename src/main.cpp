@@ -2,6 +2,7 @@
 #include <string>
 #include "data.h"
 #include "construction-heuristic.h"
+#include "math-utility.h"
 
 using namespace std;
 
@@ -15,6 +16,12 @@ int main (void) {
         data.getTimeMatrix(),
         data.getCostMatrix()
     );
+    MathUtility mu = MathUtility(
+        ch.getNotAllocatedJobs(),
+        ch.getDefaultCost(),
+        data.getCostMatrix(),
+        ch.getSolution()
+    );
 
     // print data
     for (int i = 0; i < ch.getSolution().size(); i++) {
@@ -25,6 +32,9 @@ int main (void) {
     }
 
     cout << "notAllocated: " << ch.getNotAllocatedJobs() << endl;
+
+
+    cout << "Custo Total: " << mu.getTotalCost() << endl;
 
     return 0;
 }
