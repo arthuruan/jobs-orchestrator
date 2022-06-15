@@ -84,10 +84,6 @@ vector< vector<int> > ConstructionHeuristic::getCostMatrix() {
     return costMatrix;
 }
 
-vector< vector<int> > ConstructionHeuristic::getTimeVsCost() {
-    return timeVsCost;
-}
-
 vector< vector<int> > ConstructionHeuristic::getSolution() {
     return solution;
 }

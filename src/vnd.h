@@ -1,12 +1,11 @@
-#ifndef CONSTRUCTIONHEURISTIC_H
-#define CONSTRUCTIONHEURISTIC_H
+#ifndef VND_H
+#define VND_H
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
-class ConstructionHeuristic {
+class VND {
     private:
         int jobsNumber;  // number of jobs
         int serversNumber;  // number of servers
@@ -19,25 +18,21 @@ class ConstructionHeuristic {
         vector<int> notAllocatedJobs; // number of not allocated jobs
 
     public:
-        ConstructionHeuristic();
-        ConstructionHeuristic(
+        VND();
+        VND(
             int jobsNumber,
             int serversNumber,
             int defaultCost,
             vector<int> serversTimeCapacity,
             vector< vector<int> > timeMatrix,
-            vector< vector<int> > costMatrix
+            vector< vector<int> > costMatrix,
+            vector< vector<int> > solution,
+            vector<int> notAllocatedJobs
         );
 
-        int getJobsNumber();
-        int getServersNumber();
-        int getDefaultCost();
-        vector<int> getServersTimeCapacity();
-        vector< vector<int> > getTimeMatrix();
-        vector< vector<int> > getCostMatrix();
-
-        vector< vector<int> > getSolution();
-        vector<int> getNotAllocatedJobs();
+        void execute(int r);
+        int swap(); // TODO
+        int insertionSort(); // TODO
 };
 
-#endif // CONSTRUCTIONHEURISTIC_H
+#endif // VND_H
