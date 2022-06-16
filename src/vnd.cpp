@@ -112,20 +112,20 @@ int VND::reInsertion(int totalCost) {
 void VND::execute(int r) {
     int k = 1;
     int totalCost = 200;
-    int gain = totalCost;
+    int cost = totalCost;
 
     while(k <= r) {
-        //cout << "gain: " << gain << endl;
+        //cout << "cost: " << cost << endl;
         switch (k) {
             case 1:
-                gain = swap(gain);
+                cost = swap(cost);
                 break;
             case 2:
-                gain = reInsertion(gain);
+                cost = reInsertion(cost);
                 break;
         }
 
-        if (gain > totalCost) {
+        if (cost < totalCost) {
             k++;
         } else {
             k = 1;
