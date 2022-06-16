@@ -42,7 +42,7 @@ class VND {
         int swap(int totalCost);
         int reInsertion(int totalCost); // TODO
         swapIndexes validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost);
-        reInsertionIndexes validateReInsertion(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost);
+        reInsertionIndexes validateReInsertion(vector<int> vector1, int element1, vector<int> vector2, int indexLine1, int indexLine2, int totalCost);
 };
 
 #endif // VND_H
