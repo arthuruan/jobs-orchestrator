@@ -30,10 +30,14 @@ class VND {
             vector<int> notAllocatedJobs
         );
 
+        struct swapIndexes {
+            int serverIndex1, serverIndex2, jobIndex1, jobIndex2, cost;
+        };
+
         void execute(int r);
         int swap(int totalTime); // TODO
         int insertionSort(); // TODO
-        bool validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost);
+        swapIndexes validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost);
 };
 
 #endif // VND_H

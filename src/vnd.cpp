@@ -33,16 +33,8 @@ void swapArray(vector<int> &vector1, int element1, vector<int> &vector2, int ele
     vector2[element2] = temp;
 }
 
-struct bestIndexes {
-    int serverIndex1;
-    int serverIndex2;
-    int jobIndex1;
-    int jobIndex2;
-};
-
-bool VND::validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost) {
-
-    bestIndexes bestIndexes;
+VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost) {
+    swapIndexes swapIndexes;
 
     int oldJob1 = vector1[element1];
     int oldJob2 = vector2[element2];
@@ -51,9 +43,6 @@ bool VND::validateSwap(vector<int> vector1, int element1, vector<int> vector2, i
 
     int newJob1 = vector1[element1];
     int newJob2 = vector2[element2];
-
-    cout << "oldJob1: " << oldJob1 << " oldJob2: " << oldJob2 << endl;
-    cout << "newJob1: " << newJob1 << " newJob2: " << newJob2 << endl;
 
     int server1TimeCapactity = serversTimeCapacity[indexLine1];
     int server2TimeCapactity = serversTimeCapacity[indexLine2];
@@ -68,76 +57,51 @@ bool VND::validateSwap(vector<int> vector1, int element1, vector<int> vector2, i
         currentCost = totalCost - costMatrix[indexLine1][oldJob1] - costMatrix[indexLine2][oldJob2] + costMatrix[indexLine1][newJob1] + costMatrix[indexLine2][newJob2];
 
         if (currentCost < totalCost) {
-            cout << "better cost: " <<  currentCost << endl;
+            swapIndexes.serverIndex1 = indexLine1;
+            swapIndexes.jobIndex1 = element1;
+            swapIndexes.serverIndex2 = indexLine2;
+            swapIndexes.jobIndex2 = element2;
+            swapIndexes.cost = currentCost;
         } else {
-            cout << "worse cost: " <<  currentCost << endl;
+            swapIndexes.serverIndex1 = -1;
+            swapIndexes.jobIndex1 = -1;
+            swapIndexes.serverIndex2 = -1;
+            swapIndexes.jobIndex2 = -1;
+            swapIndexes.cost = currentCost;
         }
-
-        return true;
     }
-    return false;
+    return swapIndexes;
 }
 
 int VND::swap(int totalCost) {
-    // TODO
     vector< vector<int> > aux;
     copy(solution.begin(), solution.end(), back_inserter(aux));
 
-    // for (int i = 0; i < solution.size(); i++) {
-    //     for (int j = 0; j < solution[i].size(); j++) {
-    //         cout << solution[i][j] << " ";
-    //     }
-    //     cout << " " <<endl;
-    // }
-
-    int bestCost = totalCost;
+    swapIndexes bestIndexes;
+    bestIndexes.serverIndex1 = -1;
+    bestIndexes.jobIndex1 = -1;
+    bestIndexes.serverIndex2 = -1;
+    bestIndexes.jobIndex2 = -1;
+    bestIndexes.cost = totalCost;
 
     for (int i = 0; i < aux.size(); i++) {
         for (int j = 0; j < aux[i].size(); j++) {
-            // cout << aux[i][j] << " ";
             if (i != aux[i].size() - 1) {
                 for (int k = 0; k < aux[i + 1].size(); k++) {
-                    // cout << aux[i + 1][k] << " ";
-                    bool isValid = validateSwap(aux[i], j, aux[i + 1], k, i, i + 1, totalCost);
-                    if (isValid) {
-                        // swapArray(aux[i], j, aux[i + 1], k);
-
-                        // int oldJob1 = solution[i][j];
-                        // int oldJob2 = solution[i + 1][k];
-
-                        // int newJob1 = aux[i][j];
-                        // int newJob2 = aux[i + 1][k];
-
-                        // bestCost = bestCost - costMatrix[i][oldJob1] - costMatrix[i + 1][oldJob2] + costMatrix[i][newJob1] + costMatrix[i + 1][newJob2];
-
-                        // // cout << "oldJob1: " << oldJob1 << " oldJob2: " << oldJob2 << endl;
-                        // // cout << "newJob1: " << newJob1 << " newJob2: " << newJob2 << endl;
-
-                        // cout << "total time:" << totalCost <<endl;
-                        // cout << "total time aux:" << bestCost <<endl;
-
-                        // cout << "----------------------------------------------------" << endl;
-
+                    swapIndexes currentIndexes = validateSwap(aux[i], j, aux[i + 1], k, i, i + 1, totalCost);
+                    if (currentIndexes.cost < bestIndexes.cost) {
+                        bestIndexes = currentIndexes;
                     }
-
                 }
             }
         }
-        // cout << " " <<endl;
     }
 
-    cout << "bestCost: " << bestCost << endl;
-    cout << "totalCost: " << totalCost << endl;
+    if (bestIndexes.serverIndex1 != -1) {
+        swapArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2], bestIndexes.jobIndex2);
+    }
 
-
-    // for (int i = 0; i < aux.size(); i++) {
-    //     for (int j = 0; j < aux[i].size(); j++) {
-    //         cout << aux[i][j] << " ";
-    //     }
-    //     cout << " " <<endl;
-    // }
-
-    return 1;
+    return bestIndexes.cost;
 }
 
 int VND::insertionSort() {
@@ -147,21 +111,21 @@ int VND::insertionSort() {
 
 void VND::execute(int r) {
     int k = 1;
-    int gain = 0;
+    int totalCost = 200;
+    int bestCost = totalCost;
 
     while(k <= r) {
+        cout << "gain: " << gain << endl;
         switch (k) {
             case 1:
-                gain = swap(200);
+                bestCost = swap(bestCost);
                 break;
             case 2:
-                gain = insertionSort();
-                break;
-            default:
+                bestCost = insertionSort();
                 break;
         }
 
-        if (gain > 0) {
+        if (gain > totalCost) {
             k++;
         } else {
             k = 1;
