@@ -31,8 +31,9 @@ class VND {
         );
 
         void execute(int r);
-        int swap(); // TODO
+        int swap(int totalTime); // TODO
         int insertionSort(); // TODO
+        bool validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost);
 };
 
 #endif // VND_H
