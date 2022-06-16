@@ -8,7 +8,18 @@
 using namespace std;
 
 int main (void) {
-    Data data = Data("./instances/n5m15A.txt");
+    Data data = Data("./instances/n60m10.txt");
+
+    data.printJobsNumber();
+    data.printServersNumber();
+    data.printDefaultCost();
+    cout << endl;
+    data.printServersCapacity();
+    cout << endl;
+    data.printTimeMatrix();
+    cout << endl;
+    data.printCostMatrix();
+
     ConstructionHeuristic ch = ConstructionHeuristic(
         data.getJobsNumber(),
         data.getServersNumber(),
@@ -28,14 +39,14 @@ int main (void) {
         ch.getNotAllocatedJobs()
     );
 
-    vnd.execute(3);
+    vnd.execute(2);
 
-    MathUtility mu = MathUtility(
-        ch.getNotAllocatedJobs(),
-        ch.getDefaultCost(),
-        data.getCostMatrix(),
-        ch.getSolution()
-    );
+    // MathUtility mu = MathUtility(
+    //     ch.getNotAllocatedJobs(),
+    //     ch.getDefaultCost(),
+    //     data.getCostMatrix(),
+    //     ch.getSolution()
+    // );
 
     // print data
     // for (int i = 0; i < ch.getSolution().size(); i++) {

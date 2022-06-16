@@ -22,36 +22,40 @@ Data::Data(string pathParam) {
 
     ifstream myfile(pathParam);
 
+    int aux;
+
     if (myfile.is_open()) {
-        while (getline (myfile,info)) {
-            if (line_number == 0) {
-                jobsNumber = stoi(info);
+        while (myfile.good()) {
+            myfile >> jobsNumber;
+            myfile >> serversNumber;
+            myfile >> defaultCost;
+
+            for(int i = 0; i < serversNumber; i++){
+                myfile >> aux;
+                serversCapacity.push_back(aux);
             }
-            if (line_number == 1) {
-                serversNumber = stoi(info);
-            }
-            if (line_number == 2) {
-                defaultCost = stoi(info);
-            }
-            if (line_number == 4) {
-                simple_tokenizer(info, serversCapacity);
-            }
-            if (line_number > 5 && line_number < serversNumber + 6) {
-                vector<int> line;
-                simple_tokenizer(info, line);
+            vector<int> line;
+
+            for(int i = 0; i < serversNumber; i++){
+                for(int j = 0; j < jobsNumber; j++){
+                    myfile >> aux;
+                    line.push_back(aux);
+                }
                 timeMatrix.push_back(line);
+                line.clear();
             }
-            // TODO: refact this
-            if (line_number > serversNumber + 6 && line_number < serversNumber + 7 + jobsNumber) {
-                vector<int> line;
-                simple_tokenizer(info, line);
+
+            line.clear();
+
+            for(int i = 0; i < serversNumber; i++){
+                for(int j = 0; j < jobsNumber; j++){
+                    myfile >> aux;
+                    line.push_back(aux);
+                }
                 costMatrix.push_back(line);
+                line.clear();
             }
-
-            line_number++;
         }
-
-        myfile.close();
     } else cout << "Unable to open file in path" << pathParam;
 }
 
@@ -79,4 +83,41 @@ vector< vector<int> > Data::getTimeMatrix() {
 
 vector< vector<int> > Data::getCostMatrix() {
     return costMatrix;
+}
+
+void Data::printJobsNumber() {
+    cout << jobsNumber << endl;
+}
+
+void Data::printServersNumber() {
+    cout << serversNumber << endl;
+}
+
+void Data::printDefaultCost() {
+    cout << defaultCost << endl;
+}
+
+void Data::printServersCapacity() {
+    for(int i = 0; i < serversNumber; i++){
+        cout << serversCapacity[i] << " ";
+    }
+    cout << endl;
+}
+
+void Data::printTimeMatrix() {
+    for(int i = 0; i < serversNumber; i++){
+        for(int j = 0; j < jobsNumber; j++){
+            cout << timeMatrix[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void Data::printCostMatrix() {
+    for(int i = 0; i < serversNumber; i++){
+        for(int j = 0; j < jobsNumber; j++){
+            cout << costMatrix[i][j] << " ";
+        }
+        cout << endl;
+    }
 }

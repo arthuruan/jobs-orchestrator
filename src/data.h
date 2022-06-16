@@ -25,6 +25,14 @@ class Data {
         vector<int> getServersCapacity();
         vector< vector<int> > getTimeMatrix();
         vector< vector<int> > getCostMatrix();
+
+        //print functions
+        void printJobsNumber();
+        void printServersNumber();
+        void printDefaultCost();
+        void printServersCapacity();
+        void printTimeMatrix();
+        void printCostMatrix();
 };
 
 #endif // DATA_H

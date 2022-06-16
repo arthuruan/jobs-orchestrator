@@ -56,19 +56,19 @@ VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int
 
         currentCost = totalCost - costMatrix[indexLine1][oldJob1] - costMatrix[indexLine2][oldJob2] + costMatrix[indexLine1][newJob1] + costMatrix[indexLine2][newJob2];
 
-        if (currentCost < totalCost) {
-            swapIndexes.serverIndex1 = indexLine1;
-            swapIndexes.jobIndex1 = element1;
-            swapIndexes.serverIndex2 = indexLine2;
-            swapIndexes.jobIndex2 = element2;
-            swapIndexes.cost = currentCost;
-        } else {
-            swapIndexes.serverIndex1 = -1;
-            swapIndexes.jobIndex1 = -1;
-            swapIndexes.serverIndex2 = -1;
-            swapIndexes.jobIndex2 = -1;
-            swapIndexes.cost = currentCost;
-        }
+        // if (currentCost < totalCost) {
+        swapIndexes.serverIndex1 = indexLine1;
+        swapIndexes.jobIndex1 = element1;
+        swapIndexes.serverIndex2 = indexLine2;
+        swapIndexes.jobIndex2 = element2;
+        swapIndexes.cost = currentCost;
+        // } else {
+        //     swapIndexes.serverIndex1 = -1;
+        //     swapIndexes.jobIndex1 = -1;
+        //     swapIndexes.serverIndex2 = -1;
+        //     swapIndexes.jobIndex2 = -1;
+        //     swapIndexes.cost = currentCost;
+        // }
     }
     return swapIndexes;
 }
@@ -135,10 +135,10 @@ VND::reInsertionIndexes VND::validateReInsertion(vector<int> vector1, int elemen
     int newJob1 = vector1[element1];
     int newJob2 = vector2[element2];
 
-    cout << "oldJob1: " << oldJob1 << " ";
-    cout << "newJob1: " << newJob1 << endl << endl;
-    cout << "oldJob2: " << oldJob2 << " ";
-    cout << "newJob2: " << newJob2 << endl << endl;
+    // cout << "oldJob1: " << oldJob1 << " ";
+    // cout << "newJob1: " << newJob1 << endl << endl;
+    // cout << "oldJob2: " << oldJob2 << " ";
+    // cout << "newJob2: " << newJob2 << endl << endl;
 
     int server1TimeCapactity = serversTimeCapacity[indexLine1];
     int server2TimeCapactity = serversTimeCapacity[indexLine2];
@@ -171,6 +171,16 @@ int VND::reInsertion(int totalCost) {
     vector< vector<int> > aux;
     copy(solution.begin(), solution.end(), back_inserter(aux));
 
+    // // print solution
+    // for (int i = 0; i < solution.size(); i++) {
+    //     for (int j = 0; j < solution[i].size(); j++) {
+    //         cout << solution[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
+
+    // cout << "  " << endl;
+
     reInsertionIndexes bestIndexes;
     bestIndexes.serverIndex1 = -1;
     bestIndexes.jobIndex1 = -1;
@@ -189,36 +199,51 @@ int VND::reInsertion(int totalCost) {
             }
         }
     }
+
+    // cout << "best: " << bestIndexes.cost << endl;
     
     if (bestIndexes.serverIndex1 != -1) {
         reInsertionArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2]);
     }
+
+    // for (int i = 0; i < solution.size(); i++) {
+    //     for (int j = 0; j < solution[i].size(); j++) {
+    //         cout << solution[i][j] << " ";
+    //     }
+    //     cout << endl;
+    // }
 
     return bestIndexes.cost;
 }
 
 void VND::execute(int r) {
     int k = 1;
-    int totalCost = 200;
-    int cost = totalCost;
+    int bestCost = 400;
+    int currentCost = bestCost;
+
+    cout << "------------------------------" << endl;
+    cout << "before-cost: " << bestCost << endl;
 
     while(k <= r) {
-        cout << "cost: " << cost << endl;
+        // cout << "totalCost: " << totalCost << endl;
         switch (k) {
             case 1:
-                cost = swap(cost);
+                currentCost = swap(bestCost);
                 break;
-            case 2:
-                cost = reInsertion(cost);
+            case 2: 
+                currentCost = reInsertion(bestCost);
                 break;
         }
 
-        if (cost < totalCost) {
+        if (currentCost >= bestCost) {
             k++;
         } else {
+            bestCost = currentCost;
             k = 1;
         }
     }
 
+    cout << "after-cost: " << bestCost << endl;
+    cout << "------------------------------" << endl;
 }
 
