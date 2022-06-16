@@ -33,6 +33,14 @@ void swapArray(vector<int> &vector1, int element1, vector<int> &vector2, int ele
     vector2[element2] = temp;
 }
 
+int calculateLineTime(vector<int> vec, int serverNumber, vector< vector<int> > timeMatrixParam) {
+    int time = 0;
+    for (int i = 0; i < vec.size(); i++) {
+        time += timeMatrixParam[serverNumber][vec[i]];
+    }
+    return time;
+}
+
 VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost) {
     swapIndexes swapIndexes;
 
@@ -47,8 +55,8 @@ VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int
     int server1TimeCapactity = serversTimeCapacity[indexLine1];
     int server2TimeCapactity = serversTimeCapacity[indexLine2];
 
-    int timeServer1 = timeMatrix[indexLine1][element1];
-    int timeServer2 = timeMatrix[indexLine2][element2];
+    int timeServer1 = calculateLineTime(vector1, indexLine1, timeMatrix);
+    int timeServer2 = calculateLineTime(vector2, indexLine2, timeMatrix);
 
     int currentCost = 0;
 
@@ -56,19 +64,11 @@ VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int
 
         currentCost = totalCost - costMatrix[indexLine1][oldJob1] - costMatrix[indexLine2][oldJob2] + costMatrix[indexLine1][newJob1] + costMatrix[indexLine2][newJob2];
 
-        // if (currentCost < totalCost) {
         swapIndexes.serverIndex1 = indexLine1;
         swapIndexes.jobIndex1 = element1;
         swapIndexes.serverIndex2 = indexLine2;
         swapIndexes.jobIndex2 = element2;
         swapIndexes.cost = currentCost;
-        // } else {
-        //     swapIndexes.serverIndex1 = -1;
-        //     swapIndexes.jobIndex1 = -1;
-        //     swapIndexes.serverIndex2 = -1;
-        //     swapIndexes.jobIndex2 = -1;
-        //     swapIndexes.cost = currentCost;
-        // }
     }
     return swapIndexes;
 }
@@ -115,12 +115,6 @@ void reInsertionArray(vector<int> &vector1, int element1, vector<int> &vector2) 
     
     vector1.erase(it + element1);
     vector2.push_back(temp);
-
-    // cout << "for: " << endl;
-    // for (int i = 0; i < vector2.size(); i++) {
-    //     cout << vector2[i] << " ";
-    // }
-    // cout << endl;
 }
 
 // TODO: ANALIZAR O CUSTO
@@ -143,6 +137,7 @@ VND::reInsertionIndexes VND::validateReInsertion(vector<int> vector1, int elemen
     // cout<<"TimeCapacity"<<nextServerTimeCapactity<<endl;
     int elementTimeSize = timeMatrix[indexLine1][element1];
     // cout<<elementTimeSize<<endl;
+
     int currentCost = 0;
 
     if (elementTimeSize < nextServerTimeCapactity) {
@@ -166,16 +161,6 @@ VND::reInsertionIndexes VND::validateReInsertion(vector<int> vector1, int elemen
 int VND::reInsertion(int totalCost) {
     vector< vector<int> > aux;
     copy(solution.begin(), solution.end(), back_inserter(aux));
-
-    // // print solution
-    // for (int i = 0; i < solution.size(); i++) {
-    //     for (int j = 0; j < solution[i].size(); j++) {
-    //         cout << solution[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-
-    // cout << "  " << endl;
 
     reInsertionIndexes bestIndexes;
     bestIndexes.serverIndex1 = -1;
@@ -204,16 +189,10 @@ int VND::reInsertion(int totalCost) {
     //             }
 
     cout << "best: " << bestIndexes.cost << endl;
+
     if (bestIndexes.serverIndex1 != -1) {
         reInsertionArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2]);
     }
-
-    // for (int i = 0; i < solution.size(); i++) {
-    //     for (int j = 0; j < solution[i].size(); j++) {
-    //         cout << solution[i][j] << " ";
-    //     }
-    //     cout << endl;
-    // }
 
     return bestIndexes.cost;
 }
@@ -227,9 +206,9 @@ void VND::execute(int r) {
     cout << "before-cost: " << bestCost << endl;
 
     while(k <= r) {
-        // cout << "totalCost: " << totalCost << endl;
+        // cout << "totalCost: " << bestCost << endl;
         switch (k) {
-            case 1: 
+            case 1:
                 currentCost = reInsertion(bestCost);
                 break;
             case 2:
