@@ -104,7 +104,7 @@ int VND::swap(int totalCost) {
     return bestIndexes.cost;
 }
 
-int VND::insertionSort() {
+int VND::reInsertion(int totalCost) {
     // TODO
     return 1;
 }
@@ -112,16 +112,16 @@ int VND::insertionSort() {
 void VND::execute(int r) {
     int k = 1;
     int totalCost = 200;
-    int bestCost = totalCost;
+    int gain = totalCost;
 
     while(k <= r) {
-        cout << "gain: " << gain << endl;
+        //cout << "gain: " << gain << endl;
         switch (k) {
             case 1:
-                bestCost = swap(bestCost);
+                gain = swap(gain);
                 break;
             case 2:
-                bestCost = insertionSort();
+                gain = reInsertion(gain);
                 break;
         }
 
