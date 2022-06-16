@@ -52,6 +52,7 @@ VND::swapIndexes VND::validateSwap(vector<int> vector1, int element1, vector<int
 
     int currentCost = 0;
 
+    // fix it
     if (timeServer1 < server1TimeCapactity && timeServer1 < server2TimeCapactity) {
 
         currentCost = totalCost - costMatrix[indexLine1][oldJob1] - costMatrix[indexLine2][oldJob2] + costMatrix[indexLine1][newJob1] + costMatrix[indexLine2][newJob2];
