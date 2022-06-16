@@ -46,8 +46,6 @@ int main (void) {
     // }
 
     // cout << "notAllocated: " << ch.getNotAllocatedJobs() << endl;
-
-
     // cout << "Custo Total: " << mu.getTotalCost() << endl;
 
     return 0;

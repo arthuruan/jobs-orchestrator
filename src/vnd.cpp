@@ -104,9 +104,97 @@ int VND::swap(int totalCost) {
     return bestIndexes.cost;
 }
 
+
+// TODO: ANALIZAR DESEMPENHO, ELE ADICIONA APENAS EM ALGUNS CASOS
+void reInsertionArray(vector<int> &vector1, int element1, vector<int> &vector2) {
+    int temp;
+    temp = vector1[element1];
+
+    vector<int>::iterator it;
+    it = vector1.begin();
+    
+    vector1.erase(it + element1);
+    vector2.push_back(temp);
+
+    // cout << "for: " << endl;
+    // for (int i = 0; i < vector2.size(); i++) {
+    //     cout << vector2[i] << " ";
+    // }
+    // cout << endl;
+}
+
+// TODO: ANALIZAR O CUSTO
+VND::reInsertionIndexes VND::validateReInsertion(vector<int> vector1, int element1, vector<int> vector2, int element2, int indexLine1, int indexLine2, int totalCost) {
+    reInsertionIndexes reInsertionIndexes;
+
+    int oldJob1 = vector1[element1];
+    int oldJob2 = vector2[element2];
+
+    reInsertionArray(vector1, element1, vector2);
+
+    int newJob1 = vector1[element1];
+    int newJob2 = vector2[element2];
+
+    cout << "oldJob1: " << oldJob1 << " ";
+    cout << "newJob1: " << newJob1 << endl << endl;
+    cout << "oldJob2: " << oldJob2 << " ";
+    cout << "newJob2: " << newJob2 << endl << endl;
+
+    int server1TimeCapactity = serversTimeCapacity[indexLine1];
+    int server2TimeCapactity = serversTimeCapacity[indexLine2];
+
+    int timeServer1 = timeMatrix[indexLine1][element1];
+    int timeServer2 = timeMatrix[indexLine2][element2];
+
+    int currentCost = 0;
+
+    if (timeServer1 < server1TimeCapactity && timeServer1 < server2TimeCapactity) {
+
+        currentCost = totalCost - costMatrix[indexLine1][oldJob1] - costMatrix[indexLine2][oldJob2] + costMatrix[indexLine1][newJob1] + costMatrix[indexLine2][newJob2];
+
+        if (currentCost < totalCost) {
+            reInsertionIndexes.serverIndex1 = indexLine1;
+            reInsertionIndexes.jobIndex1 = element1;
+            reInsertionIndexes.serverIndex2 = indexLine2;
+            reInsertionIndexes.cost = currentCost;
+        } else {
+            reInsertionIndexes.serverIndex1 = -1;
+            reInsertionIndexes.jobIndex1 = -1;
+            reInsertionIndexes.serverIndex2 = -1;
+            reInsertionIndexes.cost = currentCost;
+        }
+    }
+    return reInsertionIndexes;
+}
+
 int VND::reInsertion(int totalCost) {
-    // TODO
-    return 1;
+    vector< vector<int> > aux;
+    copy(solution.begin(), solution.end(), back_inserter(aux));
+
+    reInsertionIndexes bestIndexes;
+    bestIndexes.serverIndex1 = -1;
+    bestIndexes.jobIndex1 = -1;
+    bestIndexes.serverIndex2 = -1;
+    bestIndexes.cost = totalCost;
+
+    for (int i = 0; i < aux.size(); i++) {
+        for (int j = 0; j < aux[i].size(); j++) {
+            if (i != aux[i].size() - 1) {
+                for (int k = 0; k < aux[i + 1].size(); k++) {
+                    reInsertionIndexes currentIndexes = validateReInsertion(aux[i], j, aux[i + 1], k, i, i + 1, totalCost);
+                    if (currentIndexes.cost < bestIndexes.cost) {
+                        bestIndexes = currentIndexes;
+                    }
+                }
+            }
+        }
+    }
+    
+    if (bestIndexes.serverIndex1 != -1) {
+        reInsertionArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2]);
+    }
+
+    return bestIndexes.cost;
 }
 
 void VND::execute(int r) {
@@ -115,7 +203,7 @@ void VND::execute(int r) {
     int cost = totalCost;
 
     while(k <= r) {
-        //cout << "cost: " << cost << endl;
+        cout << "cost: " << cost << endl;
         switch (k) {
             case 1:
                 cost = swap(cost);
