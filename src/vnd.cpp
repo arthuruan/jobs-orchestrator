@@ -203,7 +203,7 @@ int VND::reInsertion(int totalCost) {
     //                 }
     //             }
 
-    // cout << "best: " << bestIndexes.cost << endl;
+    cout << "best: " << bestIndexes.cost << endl;
     if (bestIndexes.serverIndex1 != -1) {
         reInsertionArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2]);
     }
