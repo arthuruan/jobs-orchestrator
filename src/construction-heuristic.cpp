@@ -68,7 +68,6 @@ ConstructionHeuristic::ConstructionHeuristic(
     int timeUsed = 0;
 
     for (int i = 0; i < jobsNumber; i++) {
-
         int timeServerCapacity = serversTimeCapacity[indexServer];
 
         vector<int> lineSolution;
@@ -105,11 +104,10 @@ ConstructionHeuristic::ConstructionHeuristic(
         }
     }
 
-    for (int i = 0; i < solution.size(); i++) {
-        for (int j = 0; j < solution[i].size(); j++) {
-            cout << solution[i][j] << " ";
+    for (int i = 0; i < jobsNumber; i++) {
+        if (!contains(this->solution, i)) {
+            notAllocatedJobs.push_back(i);
         }
-        cout << endl;
     }
 
     this->notAllocatedJobs = notAllocatedJobs;
