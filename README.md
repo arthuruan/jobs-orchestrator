@@ -25,7 +25,7 @@ This project was developed with the following technologies:
 
 ## 💻 Project
 
-Jobs Orchestrator is a project to optimize the allocation of jobs in a given set of servers. The project makes use of a construction heuristic and from this solution applies the VND algorithm using Swap and Re-insertion as neighborhood movement algorithms.
+Jobs Orchestrator is a project to optimize the allocation of jobs in a given set of servers. The project makes use of a construction heuristic and from this solution applies the [VND(Variable Neighborhood Descent)](https://en.wikipedia.org/wiki/Variable_neighborhood_search) algorithm using Swap and Re-insertion as neighborhood movement algorithms.
 
 ## 🤔 How to contribute
 
