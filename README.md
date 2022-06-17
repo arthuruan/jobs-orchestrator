@@ -19,26 +19,25 @@
 
 ## 🚀 Technologies
 
-Esse projeto foi desenvolvido com as seguintes tecnologias:
+This project was developed with the following technologies:
 
-- [Jupyter Notebook](https://colab.research.google.com/)
-- [Python](https://www.python.org/)
+- [C++](https://devdocs.io/cpp/)
 
 ## 💻 Project
 
-O Who said it? é um projeto desenvolvido para a disciplina de Inteligência Artifical, com o objetivo de postar os principais resultados obtidos pela nossa IA, a partir de tweets do Donald Trump.
+Jobs Orchestrator is a project to optimize the allocation of jobs in a given set of servers. The project makes use of a construction heuristic and from this solution applies the VND algorithm using Swap and Re-insertion as neighborhood movement algorithms.
 
 ## 🤔 How to contribute
 
-- Faça um fork desse repositório;
-- Cria uma branch com a sua feature: `git checkout -b minha-feature`;
-- Faça commit das suas alterações: `git commit -m 'feat: Minha nova feature'`;
-- Faça push para a sua branch: `git push origin minha-feature`.
+- Fork this repository;
+- Create a branch with your feature: `git checkout -b my-feature`;
+- Commit your changes: `git commit -m 'feat: My new feature'`;
+- Push to your branch: `git push origin my-feature`.
 
-Depois que o merge da sua pull request for feito, você pode deletar a sua branch.
+After your pull request is merged, you can delete your branch.
 
 ## :memo: License
 
-Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+This project is under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
 ---
