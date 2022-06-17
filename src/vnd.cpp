@@ -125,8 +125,6 @@ int VND::swap(int totalCost) {
     return bestIndexes.cost;
 }
 
-
-// TODO: ANALIZAR DESEMPENHO, ELE ADICIONA APENAS EM ALGUNS CASOS
 void reInsertionArray(vector<int> &vector1, int element1, vector<int> &vector2) {
     int temp;
     temp = vector1[element1];
@@ -138,7 +136,6 @@ void reInsertionArray(vector<int> &vector1, int element1, vector<int> &vector2) 
     vector2.push_back(temp);
 }
 
-// TODO: ANALIZAR O CUSTO
 VND::reInsertionIndexes VND::validateReInsertion(vector<int> vector1, int element1, vector<int> vector2, int indexLine1, int indexLine2, int totalCost) {
     reInsertionIndexes reInsertionIndexes;
 
@@ -214,10 +211,10 @@ void VND::execute(int r) {
     while(k <= r) {
         switch (k) {
             case 1:
-                currentCost = reInsertion(bestCost);
+                currentCost = swap(bestCost);
                 break;
             case 2:
-                currentCost = swap(bestCost);
+                currentCost = reInsertion(bestCost);
                 break;
         }
 
