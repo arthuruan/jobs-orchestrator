@@ -38,6 +38,8 @@ class ConstructionHeuristic {
 
         vector< vector<int> > getSolution();
         vector<int> getNotAllocatedJobs();
+
+        void printSolution();
 };
 
 #endif // CONSTRUCTIONHEURISTIC_H

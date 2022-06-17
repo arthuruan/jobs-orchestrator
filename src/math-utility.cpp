@@ -20,13 +20,7 @@ MathUtility::MathUtility(
 
     for (int i = 0; i < solution.size(); i++) {
         for (int j = 0; j < solution[i].size(); j++) {
-            // cout << "SERVIDOR: " << i + 1 << endl;
-            // cout << "Job: " << solution[i][j] << " ";
-            // cout << endl;
             if(costMatrix.size() > i) {
-                // cout << "Custo: " << costMatrix[i][solution[i][j]] << endl;
-                // cout << endl;
-
                 total_cost += costMatrix[i][solution[i][j]];
             }
         }

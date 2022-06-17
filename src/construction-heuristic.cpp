@@ -146,3 +146,12 @@ vector< vector<int> > ConstructionHeuristic::getSolution() {
 vector<int> ConstructionHeuristic::getNotAllocatedJobs() {
     return notAllocatedJobs;
 }
+
+void ConstructionHeuristic::printSolution() {
+    for(int i = 0; i < solution.size(); i++){
+        for(int j = 0; j < solution[i].size(); j++){
+            cout << solution[i][j] << " ";
+        }
+        cout << endl;
+    }
+}

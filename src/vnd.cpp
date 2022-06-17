@@ -1,8 +1,8 @@
 #include "vnd.h"
 #include <vector>
 #include <algorithm>
-#include<algorithm> // for copy() and assign()
-#include<iterator> // for back_inserter
+#include<algorithm>
+#include<iterator>
 
 using namespace std;
 
@@ -186,8 +186,6 @@ int VND::reInsertion(int totalCost) {
         }
     }
 
-    cout << "best: " << bestIndexes.cost << endl;
-
     if (bestIndexes.serverIndex1 != -1) {
         reInsertionArray(solution[bestIndexes.serverIndex1], bestIndexes.jobIndex1, solution[bestIndexes.serverIndex2]);
     }
@@ -205,16 +203,13 @@ void VND::execute(int r) {
     );
     int currentCost = bestCost;
 
-    cout << "------------------------------" << endl;
-    cout << "before-cost: " << bestCost << endl;
-
     while(k <= r) {
         switch (k) {
             case 1:
-                currentCost = swap(bestCost);
+                currentCost = reInsertion(bestCost);
                 break;
             case 2:
-                currentCost = reInsertion(bestCost);
+                currentCost = swap(bestCost);
                 break;
         }
 
@@ -225,7 +220,21 @@ void VND::execute(int r) {
             k = 1;
         }
     }
+}
 
-    cout << "after-cost: " << bestCost << endl;
-    cout << "------------------------------" << endl;
+vector< vector<int> > VND::getSolution() {
+    return solution;
+}
+
+vector<int> VND::getNotAllocatedJobs() {
+    return notAllocatedJobs;
+}
+
+void VND::printSolution() {
+    for(int i = 0; i < solution.size(); i++){
+        for(int j = 0; j < solution[i].size(); j++){
+            cout << solution[i][j] << " ";
+        }
+        cout << endl;
+    }
 }
